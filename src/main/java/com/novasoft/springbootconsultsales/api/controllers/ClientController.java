@@ -4,6 +4,9 @@ import com.novasoft.springbootconsultsales.api.controllers.response.BaseResponse
 import com.novasoft.springbootconsultsales.api.controllers.response.client.ClientResponse;
 import com.novasoft.springbootconsultsales.application.mapper.ClientMapper;
 import com.novasoft.springbootconsultsales.application.queries.client.IClientQuery;
+import com.novasoft.springbootconsultsales.infrastructure.services.apiperu.ApiPeruPersonModel;
+import com.novasoft.springbootconsultsales.infrastructure.services.apiperu.ApiPeruResponseModel;
+import com.novasoft.springbootconsultsales.infrastructure.services.apiperu.IApiPeruService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +18,13 @@ import java.util.List;
 public class ClientController {
 
     private final IClientQuery clientQuery;
+    private final IApiPeruService apiPeruService;
+
     public static final String SUCCESS = "Success";
 
-    public ClientController(IClientQuery clientQuery) {
+    public ClientController(IClientQuery clientQuery, IApiPeruService apiPeruService) {
         this.clientQuery = clientQuery;
+        this.apiPeruService = apiPeruService;
     }
 
     @GetMapping("/{id}")
@@ -36,6 +42,22 @@ public class ClientController {
 
         return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true), HttpStatus.OK);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<BaseResponse<List<ClientResponse>>> search(@RequestParam  String search, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+        var optional = clientQuery.search(search, pageNumber, pageSize);
+        var response = optional.map(ClientMapper.INSTANCE::clientsToResponse).orElse(null);
+
+        return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true), HttpStatus.OK);
+    }
+
+    @GetMapping("/person")
+    public ResponseEntity<BaseResponse<ApiPeruResponseModel<ApiPeruPersonModel>>> people(@RequestParam  String documentNumber) {
+        var response = apiPeruService.getPerson(documentNumber);
+
+        return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true), HttpStatus.OK);
+    }
+
 }
 
 

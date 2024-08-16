@@ -1,4 +1,4 @@
-package com.novasoft.springbootconsultsales.domain.aggregates;
+package com.novasoft.springbootconsultsales.domain.core;
 
 import java.util.Date;
 

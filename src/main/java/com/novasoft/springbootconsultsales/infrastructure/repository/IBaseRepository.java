@@ -5,4 +5,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface IBaseRepository<T, Id> extends JpaRepository<T, Id> {
+
 }

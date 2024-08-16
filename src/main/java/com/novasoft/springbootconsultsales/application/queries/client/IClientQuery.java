@@ -10,4 +10,6 @@ public interface IClientQuery {
     Optional<Client> findById(String id);
 
     Optional<List<Client>> autocomplete(String search);
+
+    Optional<List<Client>> search(String search, int pageNumber, int pageSize);
 }

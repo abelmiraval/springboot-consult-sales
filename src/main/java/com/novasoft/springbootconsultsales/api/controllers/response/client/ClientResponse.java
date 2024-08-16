@@ -7,6 +7,7 @@ import lombok.*;
 @Data
 public class ClientResponse {
     private String idcliente;
+    private String text;
     private String cliente;
     private String ruc;
     private String dni;
@@ -14,4 +15,7 @@ public class ClientResponse {
     private String telefono;
     private String correo;
 
+    public String getText() {
+        return getCliente() + " - " + getRuc();
+    }
 }
