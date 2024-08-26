@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @Getter
 public class BaseResponse<T> {
-    public T data;
-    public String message;
-    public boolean status;
+    private T data;
+    private String message;
+    private boolean status;
 }

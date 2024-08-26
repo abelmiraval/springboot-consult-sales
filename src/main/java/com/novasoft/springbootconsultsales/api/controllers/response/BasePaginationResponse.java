@@ -10,9 +10,9 @@ import lombok.Setter;
 @Setter
 @Getter
 public class BasePaginationResponse<T> {
-    public T data;
-    public int page;
-    public int size;
-    public String message;
-    public boolean status;
+    private T data;
+    private int page;
+    private int size;
+    private String message;
+    private boolean status;
 }
