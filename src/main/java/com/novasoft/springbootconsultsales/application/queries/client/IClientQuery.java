@@ -12,4 +12,6 @@ public interface IClientQuery {
     Optional<List<Client>> autocomplete(String search);
 
     Optional<List<Client>> search(String search, int pageNumber, int pageSize);
+
+    Boolean create(Client client);
 }

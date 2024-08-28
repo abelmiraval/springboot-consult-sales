@@ -2,17 +2,18 @@ package com.novasoft.springbootconsultsales.application.queries.client;
 
 import com.novasoft.springbootconsultsales.domain.aggregates.client.Client;
 import com.novasoft.springbootconsultsales.domain.aggregates.client.IClientRepository;
+import com.novasoft.springbootconsultsales.domain.exceptions.BaseException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ClientQuery implements IClientQuery {
-
     private final IClientRepository clientRepository;
 
     public ClientQuery(IClientRepository clientRepository) {
@@ -33,4 +34,35 @@ public class ClientQuery implements IClientQuery {
 
         return clientRepository.search(search, pageable);
     }
+
+    public Boolean create(Client client){
+        var result = clientRepository.findByRuc(client.getRuc(), client.getDni());
+
+        if(result.isPresent()){
+            throw new BaseException("Ya existe un cliente con el número de documento ingresado");
+        }
+
+       validateDocumentType(client.getRuc());
+
+        int maxIdClient = getMaxIdClient() + 1;
+        client.setId(String.valueOf(maxIdClient));
+        client.setDate(new Date());
+
+        clientRepository.save(client);
+
+        return true;
+    }
+
+    private void validateDocumentType(String numberDocument) {
+        int size = numberDocument.length();
+
+        if (size != 8 && size != 11) {
+            throw new BaseException("Número de documento no valido");
+        }
+    }
+    private int getMaxIdClient() {
+        Integer maxId = clientRepository.getMaxIdClient();
+        return maxId != null ? maxId : 0;
+    }
+
 }
