@@ -27,10 +27,10 @@ public class ApiPeruService implements IApiPeruService {
     }
 
     @Override
-    public ApiPeruResponseModel<ApiPeruPersonModel> getPerson(String documentNumber) {
+    public ApiPeruResponseModel<ApiPeruPersonModel> getPerson(String numberDocument) {
         try {
 
-             var type = getTypePerson(documentNumber);
+             var type = getTypePerson(numberDocument);
 
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url+ "/" + type);
 
@@ -40,7 +40,7 @@ public class ApiPeruService implements IApiPeruService {
             headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
 
             Map<String, String> request = new HashMap<>();
-            request.put("dni", documentNumber);
+            request.put("dni", numberDocument);
 
             HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(request, headers);
 
@@ -60,7 +60,7 @@ public class ApiPeruService implements IApiPeruService {
         }
     }
 
-    private String getTypePerson(String documentNumber) {
-        return documentNumber.length() == 8 ? "dni" : "ruc";
+    private String getTypePerson(String numberDocument) {
+        return numberDocument.length() == 8 ? "dni" : "ruc";
     }
 }

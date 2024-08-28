@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class FieldValidationError {
-
     private String field;
     private String error;
 }
