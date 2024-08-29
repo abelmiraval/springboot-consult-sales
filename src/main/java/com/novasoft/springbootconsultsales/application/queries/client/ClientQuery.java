@@ -1,8 +1,8 @@
 package com.novasoft.springbootconsultsales.application.queries.client;
 
 import com.novasoft.springbootconsultsales.domain.aggregates.client.Client;
-import com.novasoft.springbootconsultsales.domain.aggregates.client.IClientRepository;
-import com.novasoft.springbootconsultsales.domain.exceptions.BaseException;
+import com.novasoft.springbootconsultsales.infrastructure.repository.IClientRepository;
+import com.novasoft.springbootconsultsales.application.exceptions.BusinessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -39,7 +39,7 @@ public class ClientQuery implements IClientQuery {
         var result = clientRepository.findByRuc(client.getRuc(), client.getDni());
 
         if(result.isPresent()){
-            throw new BaseException("Ya existe un cliente con el número de documento ingresado");
+            throw new BusinessException("numberDocument", "Ya existe un cliente con el número de documento ingresado");
         }
 
        validateDocumentType(client.getRuc());
@@ -57,7 +57,7 @@ public class ClientQuery implements IClientQuery {
         int size = numberDocument.length();
 
         if (size != 8 && size != 11) {
-            throw new BaseException("Número de documento no valido");
+            throw new BusinessException("numberDocument", "Número de documento no valido");
         }
     }
     private int getMaxIdClient() {

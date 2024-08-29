@@ -1,6 +1,6 @@
-package com.novasoft.springbootconsultsales.domain.aggregates.client;
+package com.novasoft.springbootconsultsales.infrastructure.repository;
 
-import com.novasoft.springbootconsultsales.infrastructure.repository.IBaseRepository;
+import com.novasoft.springbootconsultsales.domain.aggregates.client.Client;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

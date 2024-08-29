@@ -29,6 +29,8 @@ public class Client {
     private String phone;
     @Column(name = "correo")
     private String email;
+    @Column(name = "direccion")
+    private String address;
     @Column(name = "fecha")
     private Date date;
 

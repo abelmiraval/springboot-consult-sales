@@ -1,6 +1,6 @@
 package com.novasoft.springbootconsultsales.infrastructure.services.apiperu;
 
-import com.novasoft.springbootconsultsales.domain.exceptions.BaseException;
+import com.novasoft.springbootconsultsales.application.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.ParameterizedTypeReference;
@@ -56,7 +56,7 @@ public class ApiPeruService implements IApiPeruService {
 
 
         } catch (Exception e) {
-            throw new BaseException("Error al consultar el servicio de ApiPeru");
+            throw new ServiceException("Error al consultar el servicio de ApiPeru");
         }
     }
 

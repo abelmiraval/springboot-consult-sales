@@ -1,7 +1,7 @@
 package com.novasoft.springbootconsultsales.api.controllers;
 
 import com.novasoft.springbootconsultsales.api.controllers.request.client.ClientRequest;
-import com.novasoft.springbootconsultsales.api.controllers.response.BaseResponse;
+import com.novasoft.springbootconsultsales.application.wrapper.BaseResponse;
 import com.novasoft.springbootconsultsales.api.controllers.response.client.ClientResponse;
 import com.novasoft.springbootconsultsales.application.mapper.ClientMapper;
 import com.novasoft.springbootconsultsales.application.queries.client.IClientQuery;
@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -33,7 +34,7 @@ public class ClientController {
         var optional = clientQuery.findById(id);
         var response = optional.map(ClientMapper.INSTANCE::clientToResponse).orElse(null);
 
-        return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true), HttpStatus.OK);
+        return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true, new ArrayList<>()), HttpStatus.OK);
     }
 
     @GetMapping("/autocomplete")
@@ -41,7 +42,7 @@ public class ClientController {
         var optional = clientQuery.autocomplete(search);
         var response = optional.map(ClientMapper.INSTANCE::clientsToResponse).orElse(null);
 
-        return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true), HttpStatus.OK);
+        return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true, new ArrayList<>()), HttpStatus.OK);
     }
 
     @GetMapping("/search")
@@ -49,14 +50,14 @@ public class ClientController {
         var optional = clientQuery.search(search, pageNumber, pageSize);
         var response = optional.map(ClientMapper.INSTANCE::clientsToResponse).orElse(null);
 
-        return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true), HttpStatus.OK);
+        return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true, new ArrayList<>()), HttpStatus.OK);
     }
 
     @GetMapping("/person")
     public ResponseEntity<BaseResponse<ApiPeruResponseModel<ApiPeruPersonModel>>> people(@RequestParam  String numberDocument) {
         var response = apiPeruService.getPerson(numberDocument);
 
-        return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true), HttpStatus.OK);
+        return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true, new ArrayList<>()), HttpStatus.OK);
     }
 
     @PostMapping
@@ -64,7 +65,7 @@ public class ClientController {
          var client = ClientMapper.INSTANCE.requestToClient(clientRequest);
          var response = clientQuery.create(client);
 
-        return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true), HttpStatus.OK);
+        return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true, new ArrayList<>()), HttpStatus.OK);
     }
 
 }
