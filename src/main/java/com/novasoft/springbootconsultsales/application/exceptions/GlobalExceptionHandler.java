@@ -2,7 +2,6 @@ package com.novasoft.springbootconsultsales.application.exceptions;
 
 import com.novasoft.springbootconsultsales.application.util.Message;
 import com.novasoft.springbootconsultsales.application.wrapper.BaseResponse;
-import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
