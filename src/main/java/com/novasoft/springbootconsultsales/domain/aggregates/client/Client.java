@@ -17,20 +17,29 @@ public class Client {
     @Id
     @Column(name = "idcliente")
     private String id;
+
     @Column(name = "cliente")
     private String fullName;
+
     @Column(name = "ncomercial")
     private String businessName;
+
     private String ruc;
+
     private String dni;
+
     @Column(name = "contacto")
     private String contact;
+
     @Column(name = "telefono")
     private String phone;
+
     @Column(name = "correo")
     private String email;
+
     @Column(name = "direccion")
     private String address;
+
     @Column(name = "fecha")
     private Date date;
 

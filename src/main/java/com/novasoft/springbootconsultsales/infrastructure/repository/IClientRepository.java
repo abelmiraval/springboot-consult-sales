@@ -11,8 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface IClientRepository extends IBaseRepository<Client, String> {
-
-
     @Query("SELECT new com.novasoft.springbootconsultsales.domain.aggregates.client.Client(c.id, c.fullName, c.ruc, c.dni, c.contact, c.phone, c.email) " +
             "FROM Client c " +
             "WHERE c.fullName LIKE %:search% " +
