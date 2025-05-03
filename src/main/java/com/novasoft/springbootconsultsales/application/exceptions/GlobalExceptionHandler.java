@@ -2,6 +2,7 @@ package com.novasoft.springbootconsultsales.application.exceptions;
 
 import com.novasoft.springbootconsultsales.application.util.Message;
 import com.novasoft.springbootconsultsales.application.wrapper.BaseResponse;
+import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -73,16 +74,17 @@ public class GlobalExceptionHandler {
 //            org.springframework.web.server.ServerWebInputException.class,
 //            org.springframework.web.bind.MissingServletRequestParameterException.class})
 //    @ResponseBody
-//    public Error badRequest(Exception badRequestException) {
+//    public BaseResponse<String> badRequest(Exception badRequestException) {
 //        logger.info("Error: BadRequestException: {}", badRequestException.getMessage());
 //
-//        Error messageError = Error.builder()
-//                .codigo(Constants.CODE_400)
-//                .exito(Boolean.FALSE)
-//                .mensaje(Message.CODE_400)
+//        BaseResponse<String> baseResponse = BaseResponse.<String>builder()
+//                .success(Boolean.FALSE)
+//                .message(Message.CODE_400)
 //                .build();
-//        logger.info(LOG_DETAILS, messageError);
-//        return messageError;
+//
+//        logger.info(LOG_DETAILS, baseResponse);
+//
+//        return baseResponse;
 //    }
 
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -120,5 +122,6 @@ public class GlobalExceptionHandler {
 
         return baseResponse;
     }
+
 
 }
