@@ -11,6 +11,7 @@ public class ApiPeruResponseModel<T> {
 
     private boolean success;
     private T data;
+    private String message;
     private double time;
     private String source;
 }

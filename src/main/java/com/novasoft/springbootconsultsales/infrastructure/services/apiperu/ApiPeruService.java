@@ -30,9 +30,9 @@ public class ApiPeruService implements IApiPeruService {
     public ApiPeruResponseModel<ApiPeruPersonModel> getPerson(String numberDocument) {
         try {
 
-             var type = getTypePerson(numberDocument);
+            var type = getTypePerson(numberDocument);
 
-            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url+ "/" + type);
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url + "/" + type);
 
             var headers = new HttpHeaders();
             headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);

@@ -1,12 +1,12 @@
 package com.novasoft.springbootconsultsales.api.controllers;
 
 import com.novasoft.springbootconsultsales.api.controllers.request.client.ClientRequest;
+import com.novasoft.springbootconsultsales.application.dto.PersonDTO;
+import com.novasoft.springbootconsultsales.application.mapper.PersonMapper;
 import com.novasoft.springbootconsultsales.application.wrapper.BaseResponse;
 import com.novasoft.springbootconsultsales.api.controllers.response.client.ClientResponse;
 import com.novasoft.springbootconsultsales.application.mapper.ClientMapper;
 import com.novasoft.springbootconsultsales.application.queries.client.IClientQuery;
-import com.novasoft.springbootconsultsales.infrastructure.services.apiperu.ApiPeruPersonModel;
-import com.novasoft.springbootconsultsales.infrastructure.services.apiperu.ApiPeruResponseModel;
 import com.novasoft.springbootconsultsales.infrastructure.services.apiperu.IApiPeruService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -38,7 +38,7 @@ public class ClientController {
     }
 
     @GetMapping("/autocomplete")
-    public ResponseEntity<BaseResponse<List<ClientResponse>>> autocomplete(@RequestParam  String search) {
+    public ResponseEntity<BaseResponse<List<ClientResponse>>> autocomplete(@RequestParam String search) {
         var optional = clientQuery.autocomplete(search);
         var response = optional.map(ClientMapper.INSTANCE::clientsToResponse).orElse(null);
 
@@ -46,7 +46,7 @@ public class ClientController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<BaseResponse<List<ClientResponse>>> search(@RequestParam  String search, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+    public ResponseEntity<BaseResponse<List<ClientResponse>>> search(@RequestParam String search, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         var optional = clientQuery.search(search, pageNumber, pageSize);
         var response = optional.map(ClientMapper.INSTANCE::clientsToResponse).orElse(null);
 
@@ -54,16 +54,18 @@ public class ClientController {
     }
 
     @GetMapping("/person")
-    public ResponseEntity<BaseResponse<ApiPeruResponseModel<ApiPeruPersonModel>>> people(@RequestParam  String numberDocument) {
-        var response = apiPeruService.getPerson(numberDocument);
+    public ResponseEntity<BaseResponse<PersonDTO>> person(@RequestParam String numberDocument) {
+        var result = apiPeruService.getPerson(numberDocument);
 
-        return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true, new ArrayList<>()), HttpStatus.OK);
+        var response = PersonMapper.INSTANCE.personModelToPersonDTO(result.getData());
+
+        return new ResponseEntity<>(new BaseResponse<>(response, result.getMessage(), result.isSuccess(), new ArrayList<>()), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<BaseResponse<Boolean>> create(@RequestBody @Valid ClientRequest clientRequest) {
-         var client = ClientMapper.INSTANCE.requestToClient(clientRequest);
-         var response = clientQuery.create(client);
+        var client = ClientMapper.INSTANCE.requestToClient(clientRequest);
+        var response = clientQuery.create(client);
 
         return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true, new ArrayList<>()), HttpStatus.OK);
     }

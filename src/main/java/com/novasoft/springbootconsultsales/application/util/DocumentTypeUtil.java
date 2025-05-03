@@ -4,6 +4,8 @@ import com.novasoft.springbootconsultsales.application.exceptions.BusinessExcept
 
 public class  DocumentTypeUtil {
 
+    private DocumentTypeUtil() {}
+
     public static void validateDocumentType(String numberDocument) {
         int size = numberDocument.length();
 

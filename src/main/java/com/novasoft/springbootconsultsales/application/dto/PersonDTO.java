@@ -1,6 +1,5 @@
-package com.novasoft.springbootconsultsales.infrastructure.services.apiperu;
+package com.novasoft.springbootconsultsales.application.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,31 +9,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ApiPeruPersonModel {
+public class PersonDTO {
 
-    @JsonProperty("numero")
     private String documentNumber;
-
-    @JsonProperty("nombre_completo")
     private String fullName;
-
-    @JsonProperty("nombres")
     private String names;
-
-    @JsonProperty("apellido_paterno")
     private String paternalSurname;
-
-    @JsonProperty("apellido_materno")
     private String maternalSurname;
-
-    @JsonProperty("codigo_verificacion")
     private int verificationCode;
-
-    @JsonProperty("ubigeo_sunat")
     private String ubigeoSunat;
-
     private List<String> ubigeo;
-
-    @JsonProperty("direccion")
     private String address;
 }
